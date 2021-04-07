@@ -1,21 +1,25 @@
 
-//BackGround Variables
+//Variaveis do background
 let canvas = document.getElementById("snake");
 let context = canvas.getContext("2d");
 let box = 32;
 //--------------------------------------//
 
-//Snake Variables
+//Variaveis Gerais
 let snake = [];
 snake[0] = {
     x: 8 * box,
     y: 8 * box
 }
 let direction = "right";
+let food = {
+    x: Math.floor(Math.random() * 15 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 1) * box
+}
 //------------------------------------//
 
 
-//Functions
+//Funções
 function CriarBG(){
     context.fillStyle = "lightgreen";
     context.fillRect(0, 0, 16 * box, 16 * box);
@@ -26,6 +30,11 @@ function CriarCobrinha(){
         context.fillStyle = "green";
         context.fillRect(snake[i].x, snake[i].y, box, box);
     }
+}
+
+function DrawFood(){
+    context.fillStyle = "red";
+    context.fillRect(food.x, food.y, box, box);
 }
 
 document.addEventListener('keydown', update);
@@ -44,9 +53,9 @@ function IniciarJogo(){
     if (snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
     if (snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
 
-    
     CriarBG();
     CriarCobrinha();
+    DrawFood()
     
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
